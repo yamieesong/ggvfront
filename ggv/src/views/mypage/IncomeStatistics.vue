@@ -4,7 +4,7 @@
       <li class="contents">
         <!-- contents -->
         <!-- content -->
-        <div class="content">
+        <div class="content" style="padding-bottom: 20px;">
           <p class="Location">
             <a class="btn_set home">메인으로</a>
             <a class="btn_nav bold">마이페이지</a>
@@ -105,8 +105,9 @@ export default {
       chartType: "PieChart",
       chartOptions: {
         pieHole: 0.4,
-        width: 600,
-        height: 600,
+        width: 450,
+        height: 450,
+        is3D: true,
       },
       chartData: [
       ],
@@ -142,7 +143,9 @@ export default {
     chartData: {
       immediate: false,
       handler(newVal, oldVal){
-        this.reloadGChart(this.chartData, this.chartOptions, this.chartType);
+        if(newVal != oldVal){
+          this.reloadGChart(newVal, this.chartOptions, this.chartType);
+        }
       }
     },
   },
@@ -181,6 +184,7 @@ export default {
             //console.log("items", items)
             this.chartData.push([items.mn_use_dvs_det, items.sum_amount]);
           }.bind(this))
+
         }.bind(this))
         .catch(function (error) {
           alert("에러! API 요청에 오류가 있습니다. " + error);
