@@ -15,6 +15,8 @@
             <span>수입 통계</span>
           </p>
 
+          <GChart type="PieChart" :data="chartData" :options="chartOptions" />
+
           <table
             width="100%"
             cellpadding="5"
@@ -68,7 +70,7 @@
                   <tr v-for="val in items" :key="val.mn_use_dvs_det">
                     <td>{{ val.mn_use_dvs_det }}</td>
                     <td>{{ val.sum_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원" }}</td>
-                    <td>{{ (val.sum_amount / incomeTotalAmount * 100).toFixed(0) + "%" }}</td>
+                    <td>{{ (val.sum_amount / incomeTotalAmount * 100).toFixed(1) + "%" }}</td>
                   </tr>
                 </template>
                 <template v-else>
@@ -88,6 +90,8 @@
 </template>
 
 <script>
+import { GChart } from 'vue-google-charts';
+
 export default {
   data: function () {
     return {
@@ -96,6 +100,15 @@ export default {
       incomeTotalAmount: 0,
       sch_from_date: "",
       sch_to_date: "",
+
+      chartType: "PieChart",
+      chartOptions: {
+        pieHole: 0.4,
+        width: 600,
+        height: 600,
+      },
+      chartData: [
+      ],
     };
   },
   created() {
@@ -112,6 +125,7 @@ export default {
   computed: {
   },
   components: {
+    GChart: GChart,
   },
   mounted() {
   },
@@ -142,8 +156,14 @@ export default {
           this.items = res.data.expenditureList;
           this.itemsCnt = this.items.length;
 
+          this.chartData.push(["mn_use_dvs_det", "sum_amount"]);
           this.items.forEach(function(exList){
             this.incomeTotalAmount += exList.sum_amount;
+          }.bind(this))
+
+          this.items.forEach(function(items){
+            //console.log("items", items)
+            this.chartData.push([items.mn_use_dvs_det, items.sum_amount]);
           }.bind(this))
         }.bind(this))
         .catch(function (error) {
