@@ -15,7 +15,7 @@
             <span>지출 통계</span>
           </p>
           
-          <GChart v-show="expendTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions" :settings="{ packages: ['corechart'] }" style="left: 100px;"/>
+            <GChart v-show="expendTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions" :settings="{ packages: ['corechart'] }"/>
 
           <table
             width="100%"
@@ -178,6 +178,8 @@ export default {
           this.itemsCnt = this.items.length;
           
           this.chartData = [];
+          this.expendTotalAmount = 0;
+          
           this.chartData.push(["mn_use_dvs_det", "sum_amount"]);
           this.items.forEach(function(exList){
             this.expendTotalAmount += exList.sum_amount;

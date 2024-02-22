@@ -16,7 +16,7 @@
           </p>
 
           <!-- <GChart :type="chartType" :data="chartData" :options="chartOptions" /> -->
-          <GChart v-show="incomeTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions" style="left: 100px;"/>
+          <GChart v-show="incomeTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions"/>
 
           <table
             width="100%"
@@ -175,6 +175,8 @@ export default {
           this.itemsCnt = this.items.length;
 
           this.chartData = [];
+          this.incomeTotalAmount = 0;
+          
           this.chartData.push(["mn_use_dvs_det", "sum_amount"]);
           this.items.forEach(function(exList){
             this.incomeTotalAmount += exList.sum_amount;
