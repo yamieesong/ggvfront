@@ -15,7 +15,7 @@
             <span>수입 통계</span>
           </p>
 
-          <GChart type="PieChart" :data="chartData" :options="chartOptions" />
+          <GChart :type="chartType" :data="chartData" :options="chartOptions" />
 
           <table
             width="100%"
@@ -23,7 +23,7 @@
             cellspacing="0"
             border="1"
             align="left"
-            style="border-collapse: collapse; border: 1px #50bcdf"
+            style="border-collapse: collapse; border: 1px #50bcdf; margin-bottom: 30px;"
           >
             <tr style="border: 0px; border-color: blue">
               <td width="100" height="25" style="font-size: 120%">
