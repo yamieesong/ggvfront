@@ -16,7 +16,7 @@
           </p>
 
           <!-- <GChart :type="chartType" :data="chartData" :options="chartOptions" /> -->
-          <GChart v-show="incomeTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions"/>
+          <GChart v-show="incomeTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions" style="padding-left: 30%;"/>
 
           <table
             width="100%"
@@ -106,7 +106,7 @@ export default {
       chartOptions: {
         pieHole: 0.4,
         width: 450,
-        height: 450,
+        height: 300,
         is3D: true,
       },
       chartData: [

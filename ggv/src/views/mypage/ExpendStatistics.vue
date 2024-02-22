@@ -15,7 +15,7 @@
             <span>지출 통계</span>
           </p>
           
-            <GChart v-show="expendTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions" :settings="{ packages: ['corechart'] }"/>
+            <GChart v-show="expendTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions" style="padding-left: 30%;"/>
 
           <table
             width="100%"
@@ -105,7 +105,7 @@ export default {
       chartOptions: {
         pieHole: 0.4,
         width: 450,
-        height: 450,
+        height: 300,
         is3D: true,
       },
       chartData: [
