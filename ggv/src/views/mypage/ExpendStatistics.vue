@@ -14,8 +14,8 @@
           <p class="conTitle">
             <span>지출 통계</span>
           </p>
-
-          <GChart :type="chartType" :data="chartData" :options="chartOptions" style="left: 100px;"/>
+          
+          <GChart v-show="expendTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions" :settings="{ packages: ['corechart'] }" style="left: 100px;"/>
 
           <table
             width="100%"
@@ -103,12 +103,14 @@ export default {
 
       chartType: "PieChart",
       chartOptions: {
-        pieHole: 0.4,
+        //pieHole: 0.4,
         width: 600,
         height: 600,
+        is3D: true,
       },
       chartData: [
       ],
+      chartTest: {},
     };
   },
   created() {
@@ -121,6 +123,10 @@ export default {
     }
     this.sch_from_date = curYear + "-" + curMonth + "-01";
     this.sch_to_date = curYear + "-" + curMonth + "-" + curDay;
+
+    
+    //this.sch_to_date = "2024-01-31";
+    //this.sch_from_date = "2024-01-01";
   },
   computed: {
   },
@@ -138,8 +144,22 @@ export default {
         }
       }
     },
+    chartData: {
+      immediate: false,
+      handler(newVal, oldVal){
+        this.reloadGChart(this.chartData, this.chartOptions, this.chartType);
+      }
+    },
   },
   methods: {
+    reloadGChart(data, options, type) {
+      return () =>
+        h(GChart, {
+          data,
+          options,
+          type,
+        });
+    },
     getList: function(){
       let loginInfo = this.$store.state.loginInfo;
 
@@ -156,6 +176,7 @@ export default {
           this.items = res.data.expenditureList;
           this.itemsCnt = this.items.length;
           
+          this.chartData = [];
           this.chartData.push(["mn_use_dvs_det", "sum_amount"]);
           this.items.forEach(function(exList){
             this.expendTotalAmount += exList.sum_amount;
@@ -166,7 +187,7 @@ export default {
             this.chartData.push([items.mn_use_dvs_det, items.sum_amount]);
           }.bind(this))
 
-          console.log("this.items", this.items)
+          //console.log("this.items", this.items)
           
         }.bind(this))
         .catch(function (error) {

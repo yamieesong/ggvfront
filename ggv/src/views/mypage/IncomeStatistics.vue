@@ -15,7 +15,8 @@
             <span>수입 통계</span>
           </p>
 
-          <GChart :type="chartType" :data="chartData" :options="chartOptions" />
+          <!-- <GChart :type="chartType" :data="chartData" :options="chartOptions" /> -->
+          <GChart v-show="incomeTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions" style="left: 100px;"/>
 
           <table
             width="100%"
@@ -138,8 +139,22 @@ export default {
         }
       }
     },
+    chartData: {
+      immediate: false,
+      handler(newVal, oldVal){
+        this.reloadGChart(this.chartData, this.chartOptions, this.chartType);
+      }
+    },
   },
   methods: {
+    reloadGChart(data, options, type) {
+      return () =>
+        h(GChart, {
+          data,
+          options,
+          type,
+        });
+    },
     getList: function(){
       let loginInfo = this.$store.state.loginInfo;
       
@@ -156,6 +171,7 @@ export default {
           this.items = res.data.expenditureList;
           this.itemsCnt = this.items.length;
 
+          this.chartData = [];
           this.chartData.push(["mn_use_dvs_det", "sum_amount"]);
           this.items.forEach(function(exList){
             this.incomeTotalAmount += exList.sum_amount;
