@@ -152,7 +152,7 @@ export default {
   methods: {
     reloadGChart(data, options, type) {
       return () =>
-        h(GChart, {
+        (GChart, {
           data,
           options,
           type,
