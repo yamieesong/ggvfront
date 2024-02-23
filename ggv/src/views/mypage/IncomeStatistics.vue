@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { GChart } from 'vue-google-charts';
+import GChart  from '@/components/common/GChart.vue';
 
 export default {
   data: function () {
