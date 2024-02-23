@@ -16,20 +16,32 @@
           </p>
           
             <GChart v-show="expendTotalAmount > 0" :type="chartType" :data="chartData" :options="chartOptions" style="padding-left: 30%;"/>
-
+              <div style="width: 50%; left: 32%; position: relative; margin-bottom: 20px;">
+                <input
+                  type="date"
+                  style="width: 120px; margin-right: 20%;"
+                  id="from_date"
+                  name="from_date"
+                  v-model="sch_from_date"
+                />
+                <input
+                  type="date"
+                  style="width: 120px"
+                  id="to_date"
+                  name="to_date"
+                  v-model="sch_to_date"
+                />
+              </div>
+          <!--
           <table
             width="100%"
             cellpadding="5"
             cellspacing="0"
             border="1"
-            align="left"
+            align="center"
             style="border-collapse: collapse; border: 1px #50bcdf; margin-bottom: 30px;"
           >
-            <tr style="border: 0px; border-color: blue">
-              <td width="100" height="25" style="font-size: 120%">
-                &nbsp;&nbsp;
-              </td>
-              
+            <tr style="border: 0px; border-color: blue">              
               <td width="50" height="25" style="font-size: 100%">
                 <input
                   type="date"
@@ -50,6 +62,7 @@
               </td>
             </tr>
           </table>
+          -->
 
           <div style="width: 50%;">
             <table class="col" style="position: relative;right: -50%;">
@@ -68,7 +81,7 @@
               <tbody>
                 <template v-if="itemsCnt > 0">
                   <tr v-for="val in items" :key="val.mn_use_dvs_det">
-                    <td>{{ val.mn_use_dvs_det }}</td>
+                    <td>{{ val.detail_name }}</td>
                     <td>{{ val.sum_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원" }}</td>
                     <td>{{ (val.sum_amount / expendTotalAmount * 100).toFixed(1) + "%" }}</td>
                   </tr>
@@ -143,6 +156,14 @@ export default {
         }
       }
     },
+    sch_from_date: {
+      immediate: false,
+      handler(newVal, oldVal){
+        if(newVal != oldVal){
+          this.getList();
+        }
+      }
+    },
     chartData: {
       immediate: false,
       handler(newVal, oldVal){
@@ -180,14 +201,14 @@ export default {
           this.chartData = [];
           this.expendTotalAmount = 0;
           
-          this.chartData.push(["mn_use_dvs_det", "sum_amount"]);
+          this.chartData.push(["detail_name", "sum_amount"]);
           this.items.forEach(function(exList){
             this.expendTotalAmount += exList.sum_amount;
           }.bind(this))
 
           this.items.forEach(function(items){
-            //console.log("items", items)
-            this.chartData.push([items.mn_use_dvs_det, items.sum_amount]);
+            console.log("items", items)
+            this.chartData.push([items.detail_name, items.sum_amount]);
           }.bind(this))
 
           //console.log("this.items", this.items)
