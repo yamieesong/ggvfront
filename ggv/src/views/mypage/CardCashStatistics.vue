@@ -19,41 +19,67 @@
           @change="dateChange()"
           type="date" v-model="endDate" />
           <button type="button" @click='search()'>검색</button>
-          <div style="width:777px;margin-top:50px;">
+          <div style="width:800px;margin-top:50px;">
             <span id="cardSpan">123</span>
             <span id="cashSpan" style="float:right;">456</span>
           </div>
-          <div id="progress" class="progress" style="width:777px;height:77px;">
+          <div id="progress" class="progress" style="width:800px;height:50px;">
             <div id="cardArea" class="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0"
                  aria-valuemax="100" style="width: 70%;"></div>
             <div id="cashArea" class="progress-bar bg-success" role="progressbar" aria-valuenow="30"
                  aria-valuemin="0" aria-valuemax="100" style="width: 30%;"></div>
           </div>
           <div>* 체크카드 지출금액은 현금에 포함됩니다.</div>
-          <table>
-            <tr>
-              <th></th>
-              <th>카드</th>
-              <th style="border-right: 5px dotted;">품목
-              </th>
-              <th>현금</th>
-              <th>품목</th>
-            </tr>
-            <tr>
-              <td>2024-01-01</td>
-              <td>1234</td>
-              <td style="border-right: 5px dotted;">1234</td>
-              <td>1234</td>
-              <td>1234</td>
-            </tr>
-            <tr>
-              <td>2024-01-02</td>
-              <td>1234</td>
-              <td>1234</td>
-              <td>1234</td>
-              <td>1234</td>
-            </tr>
-          </table>
+          <div class="box-wrap">
+            <div class="cardArea">
+              <table>
+                <tr>
+                  <th>일자</th>
+                  <th>카드</th>
+                </tr>
+                <tr v-for="(item, index) in cardList" :key="index">
+                  <td class="tdDate">{{ item.mn_upd_dtm }}</td>
+                  <td>{{ item.sum_amount }}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="cashArea">
+              <table>
+                <tr>
+                  <th>일자</th>
+                  <th>현금</th>
+                </tr>
+                <tr v-for="(item, index) in cashList" :key="index">
+                  <td class="tdDate">{{ item.mn_upd_dtm }}</td>
+                  <td>{{ item.sum_amount }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <!--          <table>-->
+          <!--            <tr>-->
+          <!--              <th></th>-->
+          <!--              <th>카드</th>-->
+          <!--              <th style="border-right: 5px dotted;">품목-->
+          <!--              </th>-->
+          <!--              <th>현금</th>-->
+          <!--              <th>품목</th>-->
+          <!--            </tr>-->
+          <!--            <tr>-->
+          <!--              <td>2024-01-01</td>-->
+          <!--              <td>1234</td>-->
+          <!--              <td style="border-right: 5px dotted;">1234</td>-->
+          <!--              <td>1234</td>-->
+          <!--              <td>1234</td>-->
+          <!--            </tr>-->
+          <!--            <tr>-->
+          <!--              <td>2024-01-02</td>-->
+          <!--              <td>1234</td>-->
+          <!--              <td>1234</td>-->
+          <!--              <td>1234</td>-->
+          <!--              <td>1234</td>-->
+          <!--            </tr>-->
+          <!--          </table>-->
         </div>
         <!--// content -->
       </li>
@@ -76,6 +102,8 @@ export default {
       , total: 0
       , cardPercent: 0
       , cashPercent: 0
+      , cardList: ""
+      , cashList: ""
     };
   },
   mounted() {
@@ -198,6 +226,11 @@ export default {
             cashArea.style.width = cashPercent + "%";
           }
 
+          vm.cardList = res.data.cardList;
+          vm.cashList = res.data.cashList;
+
+          // mn_upd_dtm
+          // sum_amount
         })
         .catch((error) => {
           console.log(error);
@@ -235,19 +268,40 @@ table, tr, th, td {
 }
 
 table {
-  width: 777px;
+  width: 300px;
   margin-top: 50px;
 }
 
 th {
-  width: 20%;
+  width: 50%;
   padding: 5px;
   text-align: center;
+  background-color: gold;
+  font-weight: bold;
 }
 
 td {
-  width: 20%;
+  width: 50%;
   padding: 5px;
   text-align: right;
+}
+
+.box-wrap {
+  display: flex;
+
+}
+
+.cardArea {
+  width: 50%;
+
+}
+
+.cashArea {
+  width: 50%;
+
+}
+
+.tdDate {
+  text-align: center;
 }
 </style>
