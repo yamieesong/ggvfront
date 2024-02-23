@@ -56,30 +56,7 @@
               </table>
             </div>
           </div>
-          <!--          <table>-->
-          <!--            <tr>-->
-          <!--              <th></th>-->
-          <!--              <th>카드</th>-->
-          <!--              <th style="border-right: 5px dotted;">품목-->
-          <!--              </th>-->
-          <!--              <th>현금</th>-->
-          <!--              <th>품목</th>-->
-          <!--            </tr>-->
-          <!--            <tr>-->
-          <!--              <td>2024-01-01</td>-->
-          <!--              <td>1234</td>-->
-          <!--              <td style="border-right: 5px dotted;">1234</td>-->
-          <!--              <td>1234</td>-->
-          <!--              <td>1234</td>-->
-          <!--            </tr>-->
-          <!--            <tr>-->
-          <!--              <td>2024-01-02</td>-->
-          <!--              <td>1234</td>-->
-          <!--              <td>1234</td>-->
-          <!--              <td>1234</td>-->
-          <!--              <td>1234</td>-->
-          <!--            </tr>-->
-          <!--          </table>-->
+          <div id="curve_chart" style="width: 900px; height: 500px;margin-top: 50px;">12345</div>
         </div>
         <!--// content -->
       </li>
@@ -88,27 +65,28 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from 'axios';
 //  import VueDatePicker from '@vuepic/vue-datepicker';
 //   import '@vuepic/vue-datepicker/dist/main.css';
+//import "./loader";
 
 export default {
   data: function() {
     return {
-      startDate: ""
-      , endDate: ""
+      startDate: ''
+      , endDate: ''
       , card: 0
       , cash: 0
       , total: 0
       , cardPercent: 0
       , cashPercent: 0
-      , cardList: ""
-      , cashList: ""
-      , loginId: ""
+      , cardList: ''
+      , cashList: ''
+      , loginId: '',
     };
   },
   mounted() {
-    console.log("CardCashStatistics mounted start");
+    console.log('CardCashStatistics mounted start');
     this.loginId = this.$store.state.loginInfo.loginId;
 
     const date = new Date();
@@ -131,16 +109,16 @@ export default {
     fMonth = fMonth + 1;
     lMonth = lMonth + 1;
 
-    if (fMonth.toString().length === 1) fMonth = "0" + fMonth;
-    if (fDate.toString().length === 1) fDate = "0" + fDate;
-    if (lMonth.toString().length === 1) lMonth = "0" + lMonth;
-    if (lDate.toString().length === 1) lDate = "0" + lDate;
+    if (fMonth.toString().length === 1) fMonth = '0' + fMonth;
+    if (fDate.toString().length === 1) fDate = '0' + fDate;
+    if (lMonth.toString().length === 1) lMonth = '0' + lMonth;
+    if (lDate.toString().length === 1) lDate = '0' + lDate;
 
-    console.log(fYear + "-" + fMonth + "-" + fDate);
-    console.log(lYear + "-" + lMonth + "-" + lDate);
+    console.log(fYear + '-' + fMonth + '-' + fDate);
+    console.log(lYear + '-' + lMonth + '-' + lDate);
 
-    this.startDate = fYear + "-" + fMonth + "-" + fDate;
-    this.endDate = lYear + "-" + lMonth + "-" + lDate;
+    this.startDate = fYear + '-' + fMonth + '-' + fDate;
+    this.endDate = lYear + '-' + lMonth + '-' + lDate;
 
     // let params = new URLSearchParams();
     // params.append("id", 'wallmart');
@@ -154,46 +132,44 @@ export default {
       handler(a, b) {
         console.log(a, b);
         // this.testMethod();
-      }
+      },
 
-    }
+    },
   },
   methods: {
     testMethod: function() {
-      alert("!!!!!!");
+      alert('!!!!!!');
     },
     search: async function() {
-      console.log("search start");
+      console.log('search start');
       const vm = this;
 
       const returnValue = this.dateCheck(vm);
       if (!returnValue.returnValue) {
-        if (returnValue.type === "startDate") {
-          alert("시작일자가 더 큽니다");
+        if (returnValue.type === 'startDate') {
+          alert('시작일자가 더 큽니다');
         } else {
-          alert("날자범위가 180일을 초과했습니다");
+          alert('날자범위가 180일을 초과했습니다');
         }
       }
 
       // console.log(this.startDate + "," + this.endDate);
       let params = new URLSearchParams();
-      params.append("mn_use_dvs", "1"); // 1 : 지출, 2 : 수입
-      params.append("from_date", this.startDate);
-      params.append("to_date", this.endDate);
+      params.append('mn_use_dvs', '1'); // 1 : 지출, 2 : 수입
+      params.append('from_date', this.startDate);
+      params.append('to_date', this.endDate);
       // alert(this.loginId)
-      params.append("loginId", this.loginId);
-      params.append("typeChk", "pay"); // typeChk 값이 pay면 쿼리에서 group by mn_pay_dvs
-      params.append("menuName", "CardCashStatistics");
+      params.append('loginId', this.loginId);
+      params.append('typeChk', 'pay'); // typeChk 값이 pay면 쿼리에서 group by mn_pay_dvs
+      params.append('menuName', 'CardCashStatistics');
 
       await this.axios
-        .post("/mypage/expenditureListVue.do", params)
+        .post('/mypage/expenditureListVue.do', params)
         .then((res) => {
-          console.log("res start", res);
+          console.log('res start', res);
           let card = 0;
           let cash = 0;
-          if (res.data.expenditureList.length === 0) {
-
-          } else if (res.data.expenditureList.length === 1) {
+          if (res.data.expenditureList.length === 1) {
 
             if (res.data.expenditureList[0].mn_pay_dvs === 1)
               card = res.data.expenditureList[0].sum_amount;
@@ -218,17 +194,22 @@ export default {
           this.cardPercent = cardPercent;
           this.cashPercent = cashPercent;
 
-          cardSpan.innerHTML = "카드 " + card.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          cashSpan.innerHTML = cash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 현금";
+          const cardSpan = document.getElementById('cardSpan');
+          const cashSpan = document.getElementById('cashSpan');
+          const cardArea = document.getElementById('cardArea');
+          const cashArea = document.getElementById('cashArea');
+
+          cardSpan.innerHTML = '카드 ' + card.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          cashSpan.innerHTML = cash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 현금';
 
           if (res.data.expenditureList.length === 0) {
-            cardArea.innerHTML = "0%";
-            cashArea.innerHTML = "0%";
-            cardArea.style.width = "50%";
-            cashArea.style.width = "50%";
+            cardArea.innerHTML = '0%';
+            cashArea.innerHTML = '0%';
+            cardArea.style.width = '50%';
+            cashArea.style.width = '50%';
           } else {
-            cardArea.innerHTML = cardPercent.toFixed(2) + "%";
-            cashArea.innerHTML = cashPercent.toFixed(2) + "%";
+            cardArea.innerHTML = cardPercent.toFixed(2) + '%';
+            cashArea.innerHTML = cashPercent.toFixed(2) + '%';
 
             if (100 > cardPercent && cardPercent >= 90) {
               cardPercent = 90;
@@ -238,8 +219,8 @@ export default {
               cashPercent = 90;
             }
 
-            cardArea.style.width = cardPercent + "%";
-            cashArea.style.width = cashPercent + "%";
+            cardArea.style.width = cardPercent + '%';
+            cashArea.style.width = cashPercent + '%';
           }
 
           vm.cardList = res.data.cardList;
@@ -250,7 +231,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          alert("API 요청에 오류가 있습니다");
+          alert('API 요청에 오류가 있습니다');
         });
     }
     ,
@@ -260,25 +241,25 @@ export default {
     }
     ,
     dateCheck: (vm) => {
-      console.log("dateCheck start");
-      let returnValue = { "type": null, "returnValue": false };
+      console.log('dateCheck start');
+      let returnValue = { 'type': null, 'returnValue': false };
 
       let startDate = vm.startDate;
       let endDate = vm.endDate;
 
-      const sDateArr = startDate.split("-");
-      const eDateArr = endDate.split("-");
+      const sDateArr = startDate.split('-');
+      const eDateArr = endDate.split('-');
 
       startDate = new Date(sDateArr[0], sDateArr[1], sDateArr[2]);
       endDate = new Date(eDateArr[0], eDateArr[1], eDateArr[2]);
 
-      if (startDate.getTime() > endDate.getTime()) returnValue.type = "startDate";
+      if (startDate.getTime() > endDate.getTime()) returnValue.type = 'startDate';
       if ((endDate - startDate) / (24 * 60 * 60 * 1000) >= 180) returnValue.type = 180;
       if (returnValue.type === null) returnValue.returnValue = true;
 
       return returnValue;
-    }
-  }
+    },
+  },
 //components: { VueDatePicker }
 }
 ;
