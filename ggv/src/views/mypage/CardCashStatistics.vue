@@ -32,7 +32,7 @@
           <div>* 체크카드 지출금액은 현금에 포함됩니다.</div>
           <div class="box-wrap">
             <div class="cardArea">
-              <table>
+              <table class="tableCardCash">
                 <tr>
                   <th>일자</th>
                   <th>카드</th>
@@ -44,7 +44,7 @@
               </table>
             </div>
             <div class="cashArea">
-              <table>
+              <table class="tableCardCash">
                 <tr>
                   <th>일자</th>
                   <th>현금</th>
@@ -104,10 +104,13 @@ export default {
       , cashPercent: 0
       , cardList: ""
       , cashList: ""
+      , loginId: ""
     };
   },
   mounted() {
     console.log("CardCashStatistics mounted start");
+    this.loginId = this.$store.state.loginInfo.loginId;
+
     const date = new Date();
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -146,7 +149,19 @@ export default {
 
     this.search();
   },
+  watch: {
+    startDate: {
+      handler(a, b) {
+        console.log(a, b);
+        // this.testMethod();
+      }
+
+    }
+  },
   methods: {
+    testMethod: function() {
+      alert("!!!!!!");
+    },
     search: async function() {
       console.log("search start");
       const vm = this;
@@ -165,7 +180,8 @@ export default {
       params.append("mn_use_dvs", "1"); // 1 : 지출, 2 : 수입
       params.append("from_date", this.startDate);
       params.append("to_date", this.endDate);
-      params.append("loginId", "wallmart");
+      // alert(this.loginId)
+      params.append("loginId", this.loginId);
       params.append("typeChk", "pay"); // typeChk 값이 pay면 쿼리에서 group by mn_pay_dvs
       params.append("menuName", "CardCashStatistics");
 
@@ -236,10 +252,14 @@ export default {
           console.log(error);
           alert("API 요청에 오류가 있습니다");
         });
-    }, dateChange: function() {
+    }
+    ,
+    dateChange: function() {
       // alert(this.startDate + ',' + this.endDate)
 
-    }, dateCheck: (vm) => {
+    }
+    ,
+    dateCheck: (vm) => {
       console.log("dateCheck start");
       let returnValue = { "type": null, "returnValue": false };
 
@@ -259,34 +279,11 @@ export default {
       return returnValue;
     }
   }
-  //components: { VueDatePicker }
-};
+//components: { VueDatePicker }
+}
+;
 </script>
 <style>
-/*
-table, tr, th, td {
-  border: 1px solid;
-}
-
-table {
-  width: 300px;
-  margin-top: 50px;
-}
-
-th {
-  width: 50%;
-  padding: 5px;
-  text-align: center;
-  background-color: gold;
-  font-weight: bold;
-}
-
-td {
-  width: 50%;
-  padding: 5px;
-  text-align: right;
-}
-*/
 .box-wrap {
   display: flex;
 
@@ -304,5 +301,31 @@ td {
 
 .tdDate {
   text-align: center;
+}
+
+.tableCardCash {
+  border: 1px solid;
+  width: 300px;
+  margin-top: 50px;
+}
+
+.tableCardCash td {
+  border: 1px solid;
+}
+
+.tableCardCash th {
+  width: 50%;
+  padding: 5px;
+  text-align: center;
+  background-color: gold;
+  font-weight: bold;
+  border: 1px solid;
+}
+
+.tableCardCash td {
+  width: 50%;
+  padding: 5px;
+  text-align: right;
+  border: 1px solid;
 }
 </style>
