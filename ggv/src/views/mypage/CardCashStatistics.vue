@@ -39,7 +39,7 @@
                 </tr>
                 <tr v-for="(item, index) in cardList" :key="index">
                   <td class="tdDate">{{ item.mn_upd_dtm }}</td>
-                  <td>{{ item.sum_amount }}</td>
+                  <td>{{ Number(item.sum_amount).toLocaleString() }}</td>
                 </tr>
               </table>
             </div>
@@ -51,7 +51,7 @@
                 </tr>
                 <tr v-for="(item, index) in cashList" :key="index">
                   <td class="tdDate">{{ item.mn_upd_dtm }}</td>
-                  <td>{{ item.sum_amount }}</td>
+                  <td>{{ Number(item.sum_amount).toLocaleString() }}</td>
                 </tr>
               </table>
             </div>
@@ -263,6 +263,7 @@ export default {
 };
 </script>
 <style>
+/*
 table, tr, th, td {
   border: 1px solid;
 }
@@ -285,7 +286,7 @@ td {
   padding: 5px;
   text-align: right;
 }
-
+*/
 .box-wrap {
   display: flex;
 
