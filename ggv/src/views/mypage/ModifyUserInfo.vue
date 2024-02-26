@@ -157,8 +157,12 @@ export default {
       console.log(this.email);
       console.log(this.pw);
       console.log(this.pwConfirm);
-
-      if (this.pw != this.pwConfirm) {
+      
+      if (this.pw === "") {
+        alert('비밀번호를 입력해주세요.');
+        return;
+      }
+      if (this.pw != this.pwConfirm || this.pw === "") {
         alert('비밀번호와 비밀번호확인이 같지않음');
         return;
       }
