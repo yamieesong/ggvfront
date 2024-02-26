@@ -56,7 +56,11 @@
               </table>
             </div>
           </div>
-          <div id="curve_chart" style="width: 900px; height: 500px;margin-top: 50px;">12345</div>
+          <!--          <GChart-->
+          <!--            type="LineChart"-->
+          <!--            :data="chartData"-->
+          <!--            :options="chartOptions"-->
+          <!--          />-->
         </div>
         <!--// content -->
       </li>
@@ -69,6 +73,7 @@
 //  import VueDatePicker from '@vuepic/vue-datepicker';
 //   import '@vuepic/vue-datepicker/dist/main.css';
 //import "./loader";
+// import { GChart } from 'vue-google-charts';
 
 export default {
   data: function() {
@@ -82,7 +87,22 @@ export default {
       , cashPercent: 0
       , cardList: ''
       , cashList: ''
-      , loginId: '',
+      , loginId: ''
+      , chartData: [
+        ['Year', 'Sales', 'Expenses', 'Profit'],
+        ['2014', 1000, 400, 200],
+        ['2015', 1170, 460, 250],
+        ['2016', 660, 1120, 300],
+        ['2017', 1030, 540, 350],
+      ]
+      , chartOptions: {
+        chart: {
+          title: 'Company Performance',
+          subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          curveType: 'function',
+        },
+        // curveType: 'function',
+      },
     };
   },
   mounted() {
@@ -171,7 +191,7 @@ export default {
           let cash = 0;
           if (res.data.expenditureList.length === 1) {
 
-            if (res.data.expenditureList[0].mn_pay_dvs === 1)
+            if (res.data.expenditureList[0].mn_pay_dvs == 1)
               card = res.data.expenditureList[0].sum_amount;
             else
               cash = res.data.expenditureList[0].sum_amount;
@@ -259,6 +279,9 @@ export default {
 
       return returnValue;
     },
+  },
+  components: {
+    // GChart,
   },
 //components: { VueDatePicker }
 }
