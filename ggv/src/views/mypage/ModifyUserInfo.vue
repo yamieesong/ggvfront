@@ -14,16 +14,17 @@
           <p class="conTitle">
             <span>회원정보</span>
           </p>
-          
+
           <form id="myForm" action="" method="post">
             <fieldset>
               <p>
                 <label>아이디</label>
-                <input
-                  v-model="loginId"
-                  type="text"
-                  readonly
-                />
+                <span v-html="loginId" style="margin-left: 10px"></span>
+<!--                <input-->
+<!--                  v-model="loginId"-->
+<!--                  type="text"-->
+<!--                  readonly-->
+<!--                />-->
               </p>
               <p>
                 <label>이름</label>
@@ -161,6 +162,7 @@ export default {
     },
 
     updateUser: async function() {
+      console.log('updateUser start')
       console.log(this.hp);
       console.log(this.email);
       console.log(this.pw);
@@ -187,7 +189,7 @@ export default {
       params.append('email', this.email);
       params.append('pw', this.pw);
       params.append('alarmYn', this.alarmYn);
-      
+
       let params2 = new URLSearchParams();
       params2.append('goal', this.goal);
       params2.append('mbr_no', this.userNo);
@@ -226,7 +228,7 @@ export default {
     this.year = year;
     this.month = month;
 
-    
+
 
     let params = new URLSearchParams();
     params.append("loginId", loginInfo.loginId);
