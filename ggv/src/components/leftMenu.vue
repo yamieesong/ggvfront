@@ -94,7 +94,7 @@ export default {
         .then((resp) => {
           let data = resp.data;
           console.log(data.msg);
-          alert("LogOut 되어ㅆ습니다.");
+          //alert("LogOut 되어ㅆ습니다.");
           this.$router.push("/");
         })
         .catch((error) => {
