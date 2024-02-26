@@ -20,11 +20,11 @@
               <p>
                 <label>아이디</label>
                 <span v-html="loginId" style="margin-left: 10px"></span>
-<!--                <input-->
-<!--                  v-model="loginId"-->
-<!--                  type="text"-->
-<!--                  readonly-->
-<!--                />-->
+                <!--                <input-->
+                <!--                  v-model="loginId"-->
+                <!--                  type="text"-->
+                <!--                  readonly-->
+                <!--                />-->
               </p>
               <p>
                 <label>이름</label>
@@ -59,23 +59,28 @@
                 />
               </p>
               <p>
-                <label>비밀번호</label>
-                <input v-model="pw" />
-                <!--                <a @click="modPwd()">비밀번호 변경</a>-->
+                <button class='btn btn-success' type="button" @click="modPwd()">비밀번호 변경</button>
               </p>
-              <p>
-                <label>비밀번호확인</label>
-                <input v-model="pwConfirm" />
-              </p>
+              <!--              <p>-->
+              <!--                <label>비밀번호</label>-->
+              <!--                <input v-model="pw" />-->
+              <!--                &lt;!&ndash;                <a @click="modPwd()">비밀번호 변경</a>&ndash;&gt;-->
+              <!--              </p>-->
+              <!--              <p>-->
+              <!--                <label>비밀번호확인</label>-->
+              <!--                <input v-model="pwConfirm" />-->
+              <!--              </p>-->
               <div class="form-check" style="display: flex;">
                 <div class="radioBtn">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Y" v-model="alarmYn">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Y"
+                         v-model="alarmYn">
                   <label class="form-check-label" for="flexRadioDefault1">
                     동의
                   </label>
                 </div>
                 <div class="radioBtn" style="margin-left: 40px;">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="N" v-model="alarmYn">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="N"
+                         v-model="alarmYn">
                   <label class="form-check-label" for="flexRadioDefault2">
                     미동의
                   </label>
@@ -105,80 +110,80 @@
 </template>
 
 <script>
-import { openModal } from "jenesius-vue-modal";
-import modifyPasswordPop from "./ModifyPasswordPop.vue";
+import { openModal } from 'jenesius-vue-modal';
+import modifyPasswordPop from './ModifyPasswordPop.vue';
 
 export default {
-  data: function () {
+  data: function() {
     return {
       items: [],
       userInfo: [],
-      loginId: "",
-      userNm: "",
-      alarmYn: "N",
-      goal:"",
+      loginId: '',
+      userNm: '',
+      alarmYn: 'N',
+      goal: '',
       email: '',
       hp: '',
       pw: '',
       pwConfirm: '',
-      year: "",
-      month: "",
-      userNo: "",
+      year: '',
+      month: '',
+      userNo: '',
     };
   },
   watch: {
     alarmYn: {
       immediate: false,
-      handler(newVal, oldVal){
-        if(newVal === "N"){
+      handler(newVal, oldVal) {
+        if (newVal === 'N') {
           this.goal = 0;
         }
         this.alarmYn = newVal;
         //alert(this.goal)
-      }
-    }
+      },
+    },
   },
   methods: {
-    numCheck: function(){
+    numCheck: function() {
       //alert(this.goal.match(/^(?:100|\d{1,2})$/))
 
-      if(this.goal.match(/^(?:100|\d{1,2})$/) === null){
-        this.goal = "";
+      if (this.goal.match(/^(?:100|\d{1,2})$/) === null) {
+        this.goal = '';
       }
     },
-    modPwd: async function () {
+    modPwd: async function() {
       //alert('비밀번호 변경 팝업 예정');
 
       //let action = 'I';
 
       const modal = await openModal(modifyPasswordPop, {
-        title: "비밀번호 수정",
+        title: '비밀번호 수정',
       });
 
       modal.onclose = () => {
-        alert('창 닫음');
+        // alert('창 닫음');
         //return false; //Modal will not be closed
       };
     },
 
     updateUser: async function() {
-      console.log('updateUser start')
+      console.log('updateUser start');
       console.log(this.hp);
       console.log(this.email);
       console.log(this.pw);
       console.log(this.pwConfirm);
-      
-      if (this.pw === "") {
+
+      if (this.pw === '') {
         alert('비밀번호를 입력해주세요.');
         return;
       }
-      if (this.pw != this.pwConfirm || this.pw === "") {
+      if (this.pw != this.pwConfirm || this.pw === '') {
         alert('비밀번호와 비밀번호확인이 같지않음');
         return;
       }
 
       let numGoal = Number(this.goal);
-      if(numGoal >= 0 && numGoal > 100){
+      if (numGoal >= 0 && numGoal > 100) {
         alert('0~100 사이의 숫자만 입력하세요');
         return;
       }
@@ -187,7 +192,7 @@ export default {
       params.append('loginId', this.$store.state.loginInfo.loginId);
       params.append('hp', this.hp);
       params.append('email', this.email);
-      params.append('pw', this.pw);
+      params.append('pw', '');
       params.append('alarmYn', this.alarmYn);
 
       let params2 = new URLSearchParams();
@@ -217,7 +222,7 @@ export default {
   },
   mounted() {
     let loginInfo = this.$store.state.loginInfo;
-    console.log("loginInfo", loginInfo)
+    console.log('loginInfo', loginInfo);
 
     this.loginId = loginInfo.loginId;
     this.userNm = loginInfo.userNm;
@@ -229,17 +234,16 @@ export default {
     this.month = month;
 
 
-
     let params = new URLSearchParams();
-    params.append("loginId", loginInfo.loginId);
-    params.append("goal_yr", year);
-    params.append("goal_m", month);
+    params.append('loginId', loginInfo.loginId);
+    params.append('goal_yr', year);
+    params.append('goal_m', month);
 
     this.axios
-      .post("/mypage/getMypageUserInfo.do", params)
-      .then(function (res) {
+      .post('/mypage/getMypageUserInfo.do', params)
+      .then(function(res) {
         this.userInfo = res.data.getMypageUserInfo;
-        console.log("this.userInfo", this.userInfo)
+        console.log('this.userInfo', this.userInfo);
         //console.log("this.userInfo[0]", this.userInfo[0].loginID)
         this.loginId = this.userInfo[0].loginID;
         this.userNm = this.userInfo[0].name;
@@ -249,8 +253,8 @@ export default {
         this.alarmYn = this.userInfo[0].mbr_yn;
         this.userNo = this.userInfo[0].mbr_no;
       }.bind(this))
-      .catch(function (error) {
-        alert("에러! API 요청에 오류가 있습니다. " + error);
+      .catch(function(error) {
+        alert('에러! API 요청에 오류가 있습니다. ' + error);
       });
   },
 };
