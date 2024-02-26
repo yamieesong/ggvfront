@@ -5,10 +5,13 @@ import Login from '../views/Login.vue';
 import store from '../store/index.js';
 //import Content from "../views/Content.vue";
 
-/* 회원가입 추가 */
+/* ggv-회원가입 */
 import Register from '../views/auth/Register.vue';
 import Rgstcplt from '../views/auth/RgstScss.vue';
 import MbrFindId from '../views/auth/MbrFindId.vue';
+import MbrFindPw from '../views/auth/MbrFindPw.vue';
+import AuthPage from '../views/auth/AuthPage.vue';
+import FindPW from '../views/auth/FindPW.vue';
 
 const checkAuthed = function (to, from, next) {
   // console.log(store.state);
@@ -82,6 +85,23 @@ const routes = [
     path: '/mbrFindId',
     name: 'MbrFindId',
     component: MbrFindId,
+  },
+  {
+    path: '/mbrFindPw',
+    name: 'MbrFindPw',
+    component: MbrFindPw,
+  },
+  {
+    path: '/auth/:token',
+    name: 'AuthPage',
+    component: AuthPage,
+    props: true,
+  },
+  {
+    path: '/findPW/:token',
+    name: 'FindPW',
+    component: FindPW,
+    props: true,
   },
 ];
 
