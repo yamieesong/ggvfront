@@ -87,7 +87,8 @@
                   id="EMP_ID"
                   type="text"
                   name="lgn_Id"
-                  placeholder="70 (%단위 입니다.)"
+                  @input="numCheck"
+                  placeholder="0~100 (%단위 입니다.)"
                 />
               </p>
               <!-- Login Btn -->
@@ -137,6 +138,13 @@ export default {
     }
   },
   methods: {
+    numCheck: function(){
+      //alert(this.goal.match(/^(?:100|\d{1,2})$/))
+
+      if(this.goal.match(/^(?:100|\d{1,2})$/) === null){
+        this.goal = "";
+      }
+    },
     modPwd: async function () {
       //alert('비밀번호 변경 팝업 예정');
 
@@ -164,6 +172,12 @@ export default {
       }
       if (this.pw != this.pwConfirm || this.pw === "") {
         alert('비밀번호와 비밀번호확인이 같지않음');
+        return;
+      }
+
+      let numGoal = Number(this.goal);
+      if(numGoal >= 0 && numGoal > 100){
+        alert('0~100 사이의 숫자만 입력하세요');
         return;
       }
 
