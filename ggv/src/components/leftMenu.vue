@@ -5,7 +5,7 @@
       <div id="header">
         <router-link :to="'/dashboard/home'">
           <a class="logo">
-            <img id="logoImg" src="../assets/images/admin/login/logo_img.png" />
+            <img id="logoImg" src="../assets/images/admin/login/ggv_login_logo.png" />
           </a>
         </router-link>
       </div>

@@ -367,7 +367,7 @@
     height: 29px;
     font-size: 0;
     text-indent: -9999px;
-    background: url(/images/admin/comm/set_btn.png) no-repeat;
+    background: url(../../images/admin/comm/set_btn.png) no-repeat;
     vertical-align: middle;
 }
 
@@ -391,7 +391,7 @@
 a.btnType {
     display: inline-block;
     padding-left: 10px;
-    background: url(/images/admin/comm/set_btnBg.png) 0 0px no-repeat;
+    background: url(../../images/admin/comm/set_btnBg.png) 0 0px no-repeat;
 }
 
 a.btnType span {
@@ -405,7 +405,7 @@ a.btnType span {
     color: #fff;
     text-align: center;
     font-weight: 400;
-    background: url(/images/admin/comm/set_btnBg.png) 100% 0px no-repeat;
+    background: url(../../images/admin/comm/set_btnBg.png) 100% 0px no-repeat;
 }
 
 a.btnType.gray {
@@ -471,13 +471,13 @@ a.btnType3 {
 
 a.btnType3.color1 {
     border-color: #59626c;
-    background: url(/images/admin/comm/btn_bg1.png) 0 0 repeat-x;
+    background: url(../../images/admin/comm/btn_bg1.png) 0 0 repeat-x;
     color: #fff;
 }
 
 a.btnType3.color2 {
     border-color: #175795;
-    background: url(/images/admin/comm/btn_bg2.png) 0 0 repeat-x;
+    background: url(../../images/admin/comm/btn_bg2.png) 0 0 repeat-x;
     color: #fff;
 }
 
@@ -522,29 +522,29 @@ a.btnType3.color3 {
     ;
     width: 13px;
     height: 13px;
-    background: url(/images/admin/comm/img_close_bak.png) center center no-repeat;
+    background: url(../../images/admin/comm/img_close_bak.png) center center no-repeat;
     background-size: 100%;
     ;
     vertical-align: middle;
 }
 
 a.btn_icon.search {
-    background: url(/images/admin/comm/btn_search.png) 50% 50% no-repeat;
+    background: url(../../images/admin/comm/btn_search.png) 50% 50% no-repeat;
 }
 
 a.btn_icon.btn_calendar {
-    background: url(/images/admin/comm/btn_calendar01.gif) 50% 50% no-repeat;
+    background: url(../../images/admin/comm/btn_calendar01.gif) 50% 50% no-repeat;
 }
 
 .btn_icon.mail {
-    background: url(/images/admin/comm/mail.png) 50% 50% no-repeat;
+    background: url(../../images/admin/comm/mail.png) 50% 50% no-repeat;
 }
 
 .btn_set.plue {
     width: 20px;
     height: 20px;
     border: 1px solid #868686;
-    background: #fff url(/images/admin/comm/icon_plus.png) 50% 50% no-repeat;
+    background: #fff url(../../images/admin/comm/icon_plus.png) 50% 50% no-repeat;
 }
 
 
@@ -557,7 +557,7 @@ a.btn_icon.btn_calendar {
     height: 16px;
     line-height: 16px;
     font-size: 12px;
-    background: url(/images/admin/comm/bg_ico_file.png) no-repeat top left;
+    background: url(../../images/admin/comm/bg_ico_file.png) no-repeat top left;
     vertical-align: middle;
 }
 
@@ -639,7 +639,7 @@ div.scroll {
 
 .topUtil ul li.login .btnLogin {
     padding: 0 15px 0 5px;
-    background: url(/images/admin/comm/set_bul.png) 100% -60px no-repeat;
+    background: url(../../images/admin/comm/set_bul.png) 100% -60px no-repeat;
 }
 
 
@@ -657,7 +657,7 @@ div.scroll {
 li.lnb #lnb_area .logo {
     display: block;
     width: 100%;
-    background: url(/images/admin/comm/left_logoBg01.jpg) no-repeat;
+    background: url(../../images/admin/comm/left_logoBg01.jpg) no-repeat;
     text-align: center;
     background-position: 1px;
 }
@@ -675,7 +675,7 @@ li.lnb #lnb_area .login {
     position: relative;
     width: 100%;
     height: 113px;
-    background: url(/images/admin/comm/left_logoBg02.jpg) no-repeat;
+    background: url(../../images/admin/comm/left_logoBg02.jpg) no-repeat;
 }
 
 li.lnb #lnb_area .login .LoginImg {
@@ -716,13 +716,13 @@ li.lnb #lnb_area .login .btn_loginArea a {
 li.lnb #lnb_area .login .btn_loginArea a.logout {
     width: 67px;
     height: 27px;
-    background: url(/images/admin/comm/btn_logout.gif) no-repeat;
+    background: url(../../images/admin/comm/btn_logout.gif) no-repeat;
 }
 
 li.lnb #lnb_area .login .btn_loginArea a.mypage {
     width: 72px;
     height: 27px;
-    background: url(/images/admin/comm/btn_mypage.gif) no-repeat;
+    background: url(../../images/admin/comm/btn_mypage.gif) no-repeat;
 }
 
 li.lnb #lnb_area .login .btn_loginAreaMngr {
@@ -741,7 +741,7 @@ li.lnb #lnb_area .login .btn_loginAreaMngr a {
 li.lnb #lnb_area .login .btn_loginAreaMngr a.logoutMngr {
     width: 67px;
     height: 27px;
-    background: url(/images/admin/comm/btn_logout.gif) no-repeat;
+    background: url(../../images/admin/comm/btn_logout.gif) no-repeat;
 }
 
 li.lnb ul.lnbMenu li dl dt a.lnbBtn {
@@ -751,7 +751,7 @@ li.lnb ul.lnbMenu li dl dt a.lnbBtn {
     padding: 27px 0 0 90px;
     width: 130px;
     height: 44px;
-    background: url(/images/admin/comm/set_leftMenu.png) no-repeat;
+    background: url(../../images/admin/comm/set_leftMenu.png) no-repeat;
     box-sizing: content-box;
 }
 
@@ -805,7 +805,7 @@ li.lnb ul.lnbMenu li dl dt a.on em {
     right: -14px;
     width: 15px;
     height: 20px;
-    background: url(/images/admin/comm/set_bul.png) no-repeat;
+    background: url(../../images/admin/comm/set_bul.png) no-repeat;
 }
 
 li.lnb ul.lnbMenu li dl dd {
@@ -883,7 +883,7 @@ input[type="text"].input_check {
     overflow: hidden;
     font-size: 0;
     line-height: 0;
-    background: url("/images/admin/comm/input_check.png") 0 0 no-repeat;
+    background: url("../../images/admin/comm/input_check.png") 0 0 no-repeat;
 }
 
 input[type="text"].input_check.check_o {
@@ -1720,7 +1720,7 @@ table tbody .bg_gray {
     line-height: 27px;
     text-align: center;
     vertical-align: middle;
-    background: url("/images/admin/comm/set_btn.png") -396px -150px no-repeat;
+    background: url("../../images/admin/comm/set_btn.png") -396px -150px no-repeat;
 }
 
 .paging a.first {
@@ -1756,7 +1756,7 @@ table tbody .bg_gray {
     line-height: 27px;
     text-align: center;
     color: #fff;
-    background: url("/images/admin/comm/set_btn.png") -362px -150px no-repeat;
+    background: url("../../images/admin/comm/set_btn.png") -362px -150px no-repeat;
 }
 
 
@@ -1816,7 +1816,7 @@ div.layerType1 .closePop {
     right: -21px;
     width: 21px;
     height: 22px;
-    background: #3e4463 url(/images/admin/comm/set_btn.png) -453px -47px no-repeat;
+    background: #3e4463 url(../../images/admin/comm/set_btn.png) -453px -47px no-repeat;
 }
 
 div.layerType2 {
@@ -1859,7 +1859,7 @@ div.layerType2 .closePop2 {
     right: 13px;
     width: 15px;
     height: 15px;
-    background: url(/images/admin/comm/set_btn.png) -456px -50px no-repeat;
+    background: url(../../images/admin/comm/set_btn.png) -456px -50px no-repeat;
 }
 
 div.layerType3 {
@@ -1881,7 +1881,7 @@ div.layerType3 .closePop {
     right: -21px;
     width: 21px;
     height: 22px;
-    background: #3e4463 url(/images/admin/comm/set_btn.png) -453px -47px no-repeat;
+    background: #3e4463 url(../../images/admin/comm/set_btn.png) -453px -47px no-repeat;
 }
 
 #wrap_pop {
@@ -2143,25 +2143,25 @@ div.check_box .td_topRight_area {
 .popView_content_top a.menuType1 {
     width: 29px;
     height: 29px;
-    background: url(/images/admin/comm/menuType1.png) 50% 50% no-repeat;
+    background: url(../../images/admin/comm/menuType1.png) 50% 50% no-repeat;
 }
 
 .popView_content_top a.menuType1-1 {
     width: 29px;
     height: 29px;
-    background: url(/images/admin/comm/menuType1-1.png) 50% 50% no-repeat;
+    background: url(../../images/admin/comm/menuType1-1.png) 50% 50% no-repeat;
 }
 
 .popView_content_top a.menuType2 {
     width: 29px;
     height: 29px;
-    background: url(/images/admin/comm/menuType2.png) 50% 50% no-repeat;
+    background: url(../../images/admin/comm/menuType2.png) 50% 50% no-repeat;
 }
 
 .popView_content_top a.menuType2-1 {
     width: 29px;
     height: 29px;
-    background: url(/images/admin/comm/menuType2-1.png) 50% 50% no-repeat;
+    background: url(../../images/admin/comm/menuType2-1.png) 50% 50% no-repeat;
 }
 
 .popView_board {
@@ -2268,7 +2268,7 @@ table.imgbox tbody td a:hover {
     height: 157px;
     font-size: 12px !important;
     border: 1px solid #d9d9d9;
-    background-image: url(/images/admin/comm/no_image.png);
+    background-image: url(../../images/admin/comm/no_image.png);
     background-repeat: no-repeat;
     background-size: 166px;
 }
@@ -2342,7 +2342,7 @@ a.mnuBtn {
     height: 40px;
     width: 70px;
     padding: 27px 0 0 109px;
-    background: url(/images/admin/comm/set_leftMenu.png) no-repeat;
+    background: url(../../images/admin/comm/set_leftMenu.png) no-repeat;
 }
 
 a.mnuBtn.menu001 {
