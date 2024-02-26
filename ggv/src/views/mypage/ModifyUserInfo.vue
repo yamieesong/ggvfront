@@ -63,18 +63,28 @@
               </p>
               <div class="form-check" style="display: flex;">
                 <div class="radioBtn">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Y" v-model="alarmYn">
                   <label class="form-check-label" for="flexRadioDefault1">
                     동의
                   </label>
                 </div>
                 <div class="radioBtn" style="margin-left: 40px;">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="N" v-model="alarmYn">
                   <label class="form-check-label" for="flexRadioDefault2">
                     미동의
                   </label>
                 </div>
               </div>
+              <p v-if="alarmYn == 'Y'">
+                <label>목표설정</label>
+                <input
+                  v-model="goal"
+                  id="EMP_ID"
+                  type="text"
+                  name="lgn_Id"
+                  placeholder="ex) 70%"
+                />
+              </p>
               <!-- Login Btn -->
               <a>수정</a>
               <a>취소</a>
@@ -97,6 +107,8 @@ export default {
       items: [],
       loginId: "",
       userNm: "",
+      alarmYn: "N",
+      goal:"",
     };
   },
   methods: {
