@@ -29,18 +29,6 @@
       </tr>
     </table>
   </div>
-
-  <!-- <div id="margin-nav">
-    <p>
-      <router-link
-        :to="{ name: 'Register' }"
-        class="text-success text-gradient font-weight-bold"
-        >회원가입</router-link
-      >
-      | <span style="color: #41b982"> 아이디/비밀번호 찾기</span>
-      | 로그인하기
-    </p>
-  </div> -->
 </template>
 
 <script>

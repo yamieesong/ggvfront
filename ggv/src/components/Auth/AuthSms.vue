@@ -1,60 +1,70 @@
 <template>
   <div>
-    <p>
-      휴대폰 번호
-      <input
-        v-model="mbr_hp"
-        id="JOIN_HP"
-        type="text"
-        name="mbr_hp"
-        style="ime-mode: disabled"
-        maxlength="14"
-        placeholder="숫자만 입력해주세요"
-        @input="formatPhoneNumber"
-        @keypress="checkCode"
-      />
-      <button @click="runMethodAndStartTimer">인증번호 발송</button>
-      <span v-if="timerRunning"
-        >남은 시간: {{ minutes }}:{{ displaySeconds }}</span
-      >
-    </p>
-  </div>
-  <div>
-    <p>
-      인증번호
-      <input v-model="authNum" />
-      <button @click="autnCheck">확인</button>
-    </p>
-  </div>
-  <div>
-    <button v-if="showBtMail" @click="moveFindMail">메일로 찾기</button>
+    <form id="myform">
+      <ul>
+        <li>
+          <input
+            v-model="selectedOption"
+            type="radio"
+            name="myradio"
+            value="checkMAIL"
+          />이메일
+        </li>
+      </ul>
+    </form>
+
+    <div v-show="selectedOption === 'checkMAIL'">
+      <p>가입 시 입력한 이메일주소 입력해주세요</p>
+      <input v-model="mbr_mail" id="MAIL" type="text" @input="formMail" />
+      <button :disabled="authMailBtn" @click="testMethod()">
+        이메일로 인증 받기
+      </button>
+
+      <p v-show="ntcmail">
+        이메일 형식이 올바르지 않습니다. 다시 한 번 확인 해주세요
+      </p>
+
+      <div>
+        <p>
+          인증번호
+          <input v-model="authNumMail" />
+          <button @click="autnCheckMail">확인</button>
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import emailjs from 'emailjs-com'; //npm i emailjs-com로 설치
+
 export default {
+  props: ['eventid', 'authtype'],
   data() {
     return {
       mbr_hp: '',
       timerRunning: false,
-      minutes: 3,
-      seconds: 0,
-      showBtMail: false,
+      minutes: 0,
+      seconds: 15,
       authNum: '',
+      authNumMail: '',
+      authCode: '',
+      authCodeMail: '',
+      useSendAuth: false,
+      showReCode: false,
+      mbr_mail: '',
+      authMailBtn: true,
+      ntcmail: false,
+      authvalue: false,
+      selectedOption: '',
+      authmailaddr: '',
+      mbrno: '',
     };
   },
-  computed: {
-    displaySeconds() {
-      // displaySeconds computed 속성 추가
-      return this.seconds < 10 ? `0${this.seconds}` : this.seconds;
-    },
-  },
   methods: {
-    /* 휴대폰번호 포맷 변경 */
+    /* 휴대폰번호 */
     formatPhoneNumber() {
       let cleanedPhoneNumber = this.mbr_hp.replace(/[^0-9]/g, '');
-
-      // "-"을 적절한 위치에 추가하여 핸드폰 번호 형식으로 만들기
       let formattedPhoneNumber = '';
       for (let i = 0; i < cleanedPhoneNumber.length; i++) {
         if (i === 3 || i === 7) {
@@ -62,54 +72,84 @@ export default {
         }
         formattedPhoneNumber += cleanedPhoneNumber[i];
       }
-
-      // formattedPhoneNumber을 다시 mbr_hp에 할당
       this.mbr_hp = formattedPhoneNumber;
     },
 
-    /** 3분타이머 */
-    /* 화면 */
-    runMethodAndStartTimer() {
-      // 인증번호 생성
-      const verificationCode = Math.floor(1000 + Math.random() * 9000);
-      // 인증번호 SMS 발송 요청
-      this.sendVerificationCode(verificationCode);
-
-      // 3분 타이머 시작
-      this.timerRunning = true;
-      const timerInterval = setInterval(() => {
-        if (this.minutes === 0 && this.seconds === 0) {
-          clearInterval(timerInterval); // 타이머 종료
-          this.timerRunning = false;
-          this.showBtMail = true;
-          return;
-        }
-        if (this.seconds === 0) {
-          this.minutes--;
-          this.seconds = 59;
-        } else {
-          this.seconds--;
-        }
-      }, 1000);
+    /* 메일 */
+    formMail() {
+      const regex =
+        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      if (!regex.test(this.mbr_mail) || !this.mbr_mail) {
+        this.authMailBtn = true;
+        this.ntcmail = true;
+      } else {
+        this.authMailBtn = false;
+        this.ntcmail = false;
+      }
     },
 
-    /* 인증번호 SMS 발송 서버요청 */
-    sendVerificationCode(code) {
-      console.log(`인증번호 ${code}를 ${this.mbr_hp}로 전송합니다.`);
+    /* 검증 */
+    isValidatedId: function () {
+      let chk = this.checkNotEmpty([['MAIL', '메일주소를 입력해 주세요.']]);
+      return chk;
+    },
+    checkNotEmpty: function (arr) {
+      for (var i = 0, len = arr.length; i < len; i++) {
+        var elem = document.getElementById(arr[i][0]);
+        console.log('elem is...');
+        console.log(elem);
+        if (elem.length <= 0) {
+          continue;
+        }
+        var elemValue = elem.value;
+        var alertMsg = arr[i][1];
+
+        console.log(elemValue);
+        if (elemValue == '') {
+          alert(alertMsg);
+          elem.focus();
+          return false;
+        }
+      }
+      return true;
+    },
+    autnCheckMail() {
+      console.log(this.authNumMail);
+      if (this.authCodeMail == this.authNumMail) {
+        if (this.eventid == 'eventfindID') {
+          this.token = this.authmailaddr.split('/').pop();
+          this.$router.push(`/auth/${this.token}`);
+        } else if (this.eventid == 'eventfindPW') {
+          this.token = this.authmailaddr.split('/').pop();
+          this.$router.push(`/findPW/${this.token}`);
+        } else {
+          alert('잘못된 접근입니다.');
+          return;
+        }
+        alert('인증되었습니다.');
+      } else {
+        alert('인증번호가 일치하지 않습니다.');
+        return;
+      }
+    },
+
+    /* axios */
+    testMethod() {
       this.axios
         .post(
-          '/authSmsSend.do',
-          new URLSearchParams({ authHp: this.mbr_hp, code: this.code })
+          '/mbrChekMail.do',
+          new URLSearchParams({ mbr_mail: this.mbr_mail })
         )
         .then((resp) => {
           let data = resp.data;
-          console.log('인증결과' + data);
-          if (data > 0) {
-            this.$router.push('/rgstcplt/');
+          console.log('회원조회(메일) 결과 ::: ' + data.result);
 
-            this.$router.push(`/rgstcplt/${this.mbr_id}`);
+          if (data.result == 'SUCCESS') {
+            console.log('가계뷰회원(메일) ::: ' + this.mbr_mail);
+            this.mbrno = data.mbr_no;
+            this.mailToken();
           } else {
-            alert('인증이 실패하였습니다. 잠시 후 다시 시도해주세요.');
+            alert('존재하지 않는 회원입니다. 메일주소를 확인해주세요.');
             return;
           }
         })
@@ -117,14 +157,74 @@ export default {
           console.log(error);
         });
     },
+    mailToken() {
+      console.log('mailToken 진입' + this.authtype);
+      if (this.isValidatedId(this.mbr_mail)) {
+        this.axios
+          .post(
+            '/token.do',
+            new URLSearchParams({
+              mbr_mail: this.mbr_mail,
+              mbr_no: this.mbrno,
+              authtype: this.authtype,
+            })
+          )
+          .then((resp) => {
+            let data = resp.data;
+            console.log('인증결과' + data.result);
 
-    /* 인증번호 입력 */
-    autnCheck() {
-      if (this.code === this.authNum) {
-        alert('인증되었습니다.');
-      } else {
-        alert('인증번호가 일치하지 않습니다.');
-        return;
+            if (data.result == 'SUCCESS') {
+              this.code = data.authNum;
+              alert('인증번호 메일 발송 성공');
+              console.log('인증링크' + data.mailURL);
+              console.log('인증번호' + data.mailCODE);
+              this.authCodeMail = data.mailCODE;
+              this.authmailaddr = data.mailURL;
+              //this.sendRequestEmail();
+            } else {
+              alert(
+                '인증번호 발송 실패. 잠시 뒤 다시 요청해주세요. 오류가 지속되면 가계뷰로 문의해주세요.'
+              );
+              return;
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    },
+    sendRequestEmail() {
+      if (this.authtype === 'ID') {
+        const payload = {
+          mbr_mail: this.mbr_mail,
+          mailCODE: this.authCodeMail,
+          mailURL: this.authmailaddr,
+          form_time: new Date(),
+        };
+        emailjs.send('', '', payload, '').then(
+          (res) => {
+            console.log(res);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+      if (this.authtype === 'PW') {
+        const payload = {
+          mbr_mail: this.mbr_mail,
+          mailCODE: this.authCodeMail,
+          mailURL: this.authmailaddr,
+          form_time: new Date(),
+        };
+        emailjs.send('', '', payload, '').then(
+          (res) => {
+            console.log(res);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       }
     },
   },
