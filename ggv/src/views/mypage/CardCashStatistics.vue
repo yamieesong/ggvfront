@@ -37,10 +37,19 @@
                   <th>일자</th>
                   <th>카드</th>
                 </tr>
-                <tr v-for="(item, index) in cardList" :key="index">
-                  <td class="tdDate">{{ item.mn_upd_dtm }}</td>
-                  <td>{{ Number(item.sum_amount).toLocaleString() }}</td>
-                </tr>
+                <template v-if="this.cardList.length == 0">
+                  <tr>
+                    <td colspan="2" class="text-center">
+                      <strong>해당 일자 데이터가 없습니다</strong>
+                    </td>
+                  </tr>
+                </template>
+                <template v-else>
+                  <tr v-for="(item, index) in cardList" :key="index">
+                    <td class="tdDate">{{ item.mn_upd_dtm }}</td>
+                    <td>{{ Number(item.sum_amount).toLocaleString() }}</td>
+                  </tr>
+                </template>
               </table>
             </div>
             <div class="cashArea">
@@ -49,10 +58,19 @@
                   <th>일자</th>
                   <th>현금</th>
                 </tr>
-                <tr v-for="(item, index) in cashList" :key="index">
-                  <td class="tdDate">{{ item.mn_upd_dtm }}</td>
-                  <td>{{ Number(item.sum_amount).toLocaleString() }}</td>
-                </tr>
+                <template v-if="this.cashList.length == 0">
+                  <tr>
+                    <td colspan="2" class="text-center">
+                      <strong>해당 일자 데이터가 없습니다</strong>
+                    </td>
+                  </tr>
+                </template>
+                <template v-else>
+                  <tr v-for="(item, index) in cashList" :key="index">
+                    <td class="tdDate">{{ item.mn_upd_dtm }}</td>
+                    <td>{{ Number(item.sum_amount).toLocaleString() }}</td>
+                  </tr>
+                </template>
               </table>
             </div>
           </div>
