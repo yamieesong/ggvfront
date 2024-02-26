@@ -14,7 +14,7 @@
           <p class="conTitle">
             <span>회원정보</span>
           </p>
-
+          
           <form id="myForm" action="" method="post">
             <fieldset>
               <p>
@@ -37,9 +37,9 @@
                 <label>휴대폰번호</label>
                 <input
                   v-model="hp"
-                  id="hp"
+                  id="EMP_ID"
                   type="text"
-                  name="hp"
+                  name="lgn_Id"
                   placeholder="010xxxxxxxx"
                   style="ime-mode: inactive"
                   @keypress="checkCode"
@@ -49,8 +49,9 @@
                 <label>메일주소</label>
                 <input
                   v-model="email"
-                  id="email"
-                  name="email"
+                  id="EMP_ID"
+                  type="text"
+                  name="lgn_Id"
                   placeholder="xx@xx.com"
                   style="ime-mode: inactive"
                   @keypress="checkCode"
@@ -67,15 +68,13 @@
               </p>
               <div class="form-check" style="display: flex;">
                 <div class="radioBtn">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Y"
-                         v-model="alarmYn">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Y" v-model="alarmYn">
                   <label class="form-check-label" for="flexRadioDefault1">
                     동의
                   </label>
                 </div>
                 <div class="radioBtn" style="margin-left: 40px;">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="N"
-                         v-model="alarmYn">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="N" v-model="alarmYn">
                   <label class="form-check-label" for="flexRadioDefault2">
                     미동의
                   </label>
@@ -88,7 +87,7 @@
                   id="EMP_ID"
                   type="text"
                   name="lgn_Id"
-                  placeholder="ex) 70%"
+                  placeholder="70 (%단위 입니다.)"
                 />
               </p>
               <!-- Login Btn -->
@@ -104,31 +103,34 @@
 </template>
 
 <script>
-import { openModal } from 'jenesius-vue-modal';
-import modifyPasswordPop from './ModifyPasswordPop.vue';
+import { openModal } from "jenesius-vue-modal";
+import modifyPasswordPop from "./ModifyPasswordPop.vue";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       items: [],
-      loginId: '',
-      userNm: '',
-      alarmYn: 'N',
-      goal: '',
+      userInfo: [],
+      loginId: "",
+      userNm: "",
+      alarmYn: "N",
+      goal:"",
       email: '',
       hp: '',
       pw: '',
       pwConfirm: '',
+      year: "",
+      month: "",
     };
   },
   methods: {
-    modPwd: async function() {
+    modPwd: async function () {
       //alert('비밀번호 변경 팝업 예정');
 
       //let action = 'I';
 
       const modal = await openModal(modifyPasswordPop, {
-        title: '비밀번호 수정',
+        title: "비밀번호 수정",
       });
 
       modal.onclose = () => {
@@ -154,23 +156,67 @@ export default {
       params.append('email', this.email);
       params.append('pw', this.pw);
       params.append('alarmYn', this.alarmYn);
+      
+      let params2 = new URLSearchParams();
+      params2.append('goal', this.goal);
+      params2.append('goal_yr', this.year);
+      params2.append('goal_m', this.month);
+      //console.log("updateUserGaol params2", this.year, this.month, this.goal)
 
       if (confirm('수정?')) {
+
         await this.axios
           .post('/mypage/updateUser.do', params)
           .then(function(res) {
             console.log(res);
-            alert('수정성공');
+            //alert('수정성공');
+          });
+
+        await this.axios
+          .post('/mypage/updateUserGoal.do', params2)
+          .then(function(res) {
+            console.log(res);
+            //alert('수정성공2');
           });
       }
     },
   },
   mounted() {
     let loginInfo = this.$store.state.loginInfo;
-    console.log('loginInfo', loginInfo);
+    console.log("loginInfo", loginInfo)
 
     this.loginId = loginInfo.loginId;
     this.userNm = loginInfo.userNm;
+
+    let date = new Date();
+    let year = date.getFullYear().toString();
+    let month = (date.getMonth() + 1).toString();
+    this.year = year;
+    this.month = month;
+
+    
+
+    let params = new URLSearchParams();
+    params.append("loginId", loginInfo.loginId);
+    params.append("goal_yr", year);
+    params.append("goal_m", month);
+
+    this.axios
+      .post("/mypage/getMypageUserInfo.do", params)
+      .then(function (res) {
+        this.userInfo = res.data.getMypageUserInfo;
+        console.log("this.userInfo", this.userInfo)
+        //console.log("this.userInfo[0]", this.userInfo[0].loginID)
+        this.loginId = this.userInfo[0].loginID;
+        this.userNm = this.userInfo[0].name;
+        this.goal = this.userInfo[0].goal;
+        this.email = this.userInfo[0].mbr_mail;
+        this.hp = this.userInfo[0].mbr_hp;
+        this.alarmYn = this.userInfo[0].mbr_yn;
+      }.bind(this))
+      .catch(function (error) {
+        alert("에러! API 요청에 오류가 있습니다. " + error);
+      });
   },
 };
 </script>
