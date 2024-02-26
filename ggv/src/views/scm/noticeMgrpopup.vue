@@ -17,9 +17,7 @@
           <td colspan="4" class="text-center">
             <div class="my-4">
               <strong style="font-size: 30px">
-                <!-- Modify the part where you use $options.momentDate.format('YYYY-MM-DD') -->
                 {{ mn_dtm }}
-                <your-component :mn_dtm="new Date('2024-02-07')" />
               </strong>
             </div>
           </td>
@@ -33,7 +31,7 @@
               name="mn_use_memo"
               id="mn_use_memo"
               v-model="mn_use_memo"
-            />TR
+            />
           </td>
           <th scope="row">구분 <span class="font_red">*</span></th>
           <td>
@@ -123,7 +121,7 @@ export default {
     title: String,
     mn_no: String,
     action: String,
-    mn_dtm: Date, // Make sure to initialize mn_dtm properly
+    mn_dtm: String,
   },
   data: function () {
     return {
@@ -142,6 +140,9 @@ export default {
       delshow: false,
     };
   },
+  created() {
+    this.mn_dtm = this.$props.mn_dtm;
+  },
   computed: {
     mnUseDvsCodeList() {
       /* 구분 1.지출 2.수입 */
@@ -149,25 +150,14 @@ export default {
     },
     mnUseDvsDetCodeList() {
       /* 항목 U01. 식비 등등.. */
-      return this.codeList.filter((code) => code.group_code === "USE_DETAIL");
+      return this.codeList.filter(
+        (code) =>
+          code.group_code === "USE_DETAIL" || code.group_code === "PAY_DETAIL"
+      );
     },
     mnPayDvsCodeList() {
       /* 결제구분 1.카드 2.현금 */
       return this.codeList.filter((code) => code.group_code === "PAY_DVS");
-    },
-    formattedDate() {
-      // Check if mn_dtm is a valid Date object
-      if (this.mn_dtm instanceof Date && !isNaN(this.mn_dtm)) {
-        // Format the date as desired (e.g., YYYY-MM-DD)
-        return this.mn_dtm.toISOString().split("T")[0];
-      } else {
-        return "Invalid Date";
-      }
-    },
-  },
-  watch: {
-    mn_dtm: function (newDate) {
-      console.log("mn_dtm changed:", newDate);
     },
   },
   mounted: function () {
@@ -222,11 +212,8 @@ export default {
     save: function () {
       let params = new URLSearchParams();
 
-      console.log("날짜 : ", this.mn_dtm);
-      //return;
-
       params.append("mn_no", this.mn_no);
-      params.append("mn_dtm", "2024-02-23");
+      params.append("mn_dtm", this.mn_dtm);
       params.append("mn_use_memo", this.mn_use_memo);
       params.append("mn_use_dvs", this.mn_use_dvs);
       params.append("mn_use_dvs_det", this.mn_use_dvs_det);
