@@ -122,7 +122,20 @@ export default {
       pwConfirm: '',
       year: "",
       month: "",
+      userNo: "",
     };
+  },
+  watch: {
+    alarmYn: {
+      immediate: false,
+      handler(newVal, oldVal){
+        if(newVal === "N"){
+          this.goal = 0;
+        }
+        this.alarmYn = newVal;
+        //alert(this.goal)
+      }
+    }
   },
   methods: {
     modPwd: async function () {
@@ -146,8 +159,12 @@ export default {
       console.log(this.email);
       console.log(this.pw);
       console.log(this.pwConfirm);
-
-      if (this.pw != this.pwConfirm) {
+      
+      if (this.pw === "") {
+        alert('비밀번호를 입력해주세요.');
+        return;
+      }
+      if (this.pw != this.pwConfirm || this.pw === "") {
         alert('비밀번호와 비밀번호확인이 같지않음');
         return;
       }
@@ -161,6 +178,7 @@ export default {
 
       let params2 = new URLSearchParams();
       params2.append('goal', this.goal);
+      params2.append('mbr_no', this.userNo);
       params2.append('goal_yr', this.year);
       params2.append('goal_m', this.month);
       //console.log("updateUserGaol params2", this.year, this.month, this.goal)
@@ -215,6 +233,7 @@ export default {
         this.email = this.userInfo[0].mbr_mail;
         this.hp = this.userInfo[0].mbr_hp;
         this.alarmYn = this.userInfo[0].mbr_yn;
+        this.userNo = this.userInfo[0].mbr_no;
       }.bind(this))
       .catch(function (error) {
         alert("에러! API 요청에 오류가 있습니다. " + error);
