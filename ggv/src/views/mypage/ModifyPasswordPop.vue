@@ -35,7 +35,7 @@ export default {
         };
     },
     mounted() {
-      let loginInfo = this.$store.state.loginInfo;
+      //let loginInfo = this.$store.state.loginInfo;
       //console.log(loginInfo)
     },
     methods: {
