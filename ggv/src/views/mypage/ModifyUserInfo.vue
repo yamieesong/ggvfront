@@ -167,12 +167,15 @@ export default {
     },
 
     updateUser: async function() {
+      /*
       console.log('updateUser start');
       console.log(this.hp);
       console.log(this.email);
       console.log(this.pw);
       console.log(this.pwConfirm);
-
+      */
+     
+      /*
       if (this.pw === '') {
         alert('비밀번호를 입력해주세요.');
         return;
@@ -181,12 +184,15 @@ export default {
         alert('비밀번호와 비밀번호확인이 같지않음');
         return;
       }
+      */
 
+      /*
       let numGoal = Number(this.goal);
       if (numGoal >= 0 && numGoal > 100) {
         alert('0~100 사이의 숫자만 입력하세요');
         return;
       }
+      */
 
       let params = new URLSearchParams();
       params.append('loginId', this.$store.state.loginInfo.loginId);
@@ -202,19 +208,19 @@ export default {
       params2.append('goal_m', this.month);
       //console.log("updateUserGaol params2", this.year, this.month, this.goal)
 
-      if (confirm('수정?')) {
+      if (confirm('수정 하시겠습니까?')) {
 
         await this.axios
           .post('/mypage/updateUser.do', params)
           .then(function(res) {
-            console.log(res);
+            //console.log(res);
             //alert('수정성공');
           });
 
         await this.axios
           .post('/mypage/updateUserGoal.do', params2)
           .then(function(res) {
-            console.log(res);
+            //console.log(res);
             //alert('수정성공2');
           });
       }
@@ -222,7 +228,7 @@ export default {
   },
   mounted() {
     let loginInfo = this.$store.state.loginInfo;
-    console.log('loginInfo', loginInfo);
+    //console.log('loginInfo', loginInfo);
 
     this.loginId = loginInfo.loginId;
     this.userNm = loginInfo.userNm;
@@ -243,7 +249,7 @@ export default {
       .post('/mypage/getMypageUserInfo.do', params)
       .then(function(res) {
         this.userInfo = res.data.getMypageUserInfo;
-        console.log('this.userInfo', this.userInfo);
+        //console.log('this.userInfo', this.userInfo);
         //console.log("this.userInfo[0]", this.userInfo[0].loginID)
         this.loginId = this.userInfo[0].loginID;
         this.userNm = this.userInfo[0].name;
