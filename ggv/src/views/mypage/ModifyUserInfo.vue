@@ -135,6 +135,7 @@ export default {
     alarmYn: {
       immediate: false,
       handler(newVal, oldVal) {
+        console.log(newVal, oldVal)        
         if (newVal === 'N') {
           this.goal = 0;
         }
@@ -174,7 +175,7 @@ export default {
       console.log(this.pw);
       console.log(this.pwConfirm);
       */
-     
+
       /*
       if (this.pw === '') {
         alert('비밀번호를 입력해주세요.');
@@ -213,14 +214,14 @@ export default {
         await this.axios
           .post('/mypage/updateUser.do', params)
           .then(function(res) {
-            //console.log(res);
+            console.log(res);
             //alert('수정성공');
           });
 
         await this.axios
           .post('/mypage/updateUserGoal.do', params2)
           .then(function(res) {
-            //console.log(res);
+            console.log(res);
             //alert('수정성공2');
           });
       }
