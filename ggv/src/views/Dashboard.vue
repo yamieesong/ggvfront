@@ -15,7 +15,7 @@
           <!-- content AREA -->
           <!-- connecting to router view -->
           <div class="content" id="moneyback">
-            <a><img id="logoImg" src="../assets/images/main.jpg" /> </a>
+            <img id="logoImg2" src="../assets/images/main.jpg" />
           </div>
         </li>
       </ul>
@@ -52,12 +52,13 @@ export default {
 </script>
 
 <style>
-#logoImg {
-  height: 600px;
+#logoImg2 {
+  height: 500px;
+  margin-top: 50px;
 }
 
 #moneyback {
-  background-color: #fcf0d6;
+  background-color: #e1dddc;
   text-align: center;
 }
 </style>
