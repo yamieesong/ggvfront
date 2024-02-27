@@ -14,8 +14,8 @@
         <li class="contents">
           <!-- content AREA -->
           <!-- connecting to router view -->
-          <div class="content">
-            <router-view :type="type" :menu="menu"></router-view>
+          <div class="content" id="moneyback">
+            <a><img id="logoImg" src="../assets/images/main.jpg" /> </a>
           </div>
         </li>
       </ul>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Menu from "@/components/leftMenu.vue";
+import Menu from '@/components/leftMenu.vue';
 
 export default {
   data: function () {
@@ -50,3 +50,14 @@ export default {
   components: { Menu },
 };
 </script>
+
+<style>
+#logoImg {
+  height: 600px;
+}
+
+#moneyback {
+  background-color: #fcf0d6;
+  text-align: center;
+}
+</style>
