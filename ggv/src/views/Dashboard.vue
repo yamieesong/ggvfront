@@ -14,8 +14,8 @@
         <li class="contents">
           <!-- content AREA -->
           <!-- connecting to router view -->
-          <div class="content" id="moneyback">
-            <img id="logoImg2" src="../assets/images/main.jpg" />
+          <div class="content">
+            <router-view :type="type" :menu="menu"></router-view>
           </div>
         </li>
       </ul>
@@ -50,15 +50,3 @@ export default {
   components: { Menu },
 };
 </script>
-
-<style>
-#logoImg2 {
-  height: 500px;
-  margin-top: 50px;
-}
-
-#moneyback {
-  background-color: #e1dddc;
-  text-align: center;
-}
-</style>
